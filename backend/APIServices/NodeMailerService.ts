@@ -3,8 +3,8 @@ import nodemailer, { Transporter } from "nodemailer"
 const nodeMailerTransporter :Transporter = nodemailer.createTransport({
     service: "gmail",
     auth:{
-        user: "qqqeee155@gmail.com",
-        pass: "swt123@@@"
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD
     }
 })
 

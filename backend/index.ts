@@ -1,8 +1,9 @@
 import express, {json , Express} from "express"
+import dotenv from "dotenv"
 import cors from "cors"
 import MessageRouter from "./Messages/MessageRouter"
 import ProductRouter from "./Products/ProductRouter"
-
+dotenv.config()
 
 
 const app :Express = express()
