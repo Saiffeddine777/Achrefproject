@@ -1,4 +1,6 @@
-import Product, { ProductInterface } from "./Product";
+
+import { deleteImages } from "../Helpers/CloudinaryHelpers";
+import Product, { ImageInfoInterface, ProductInterface } from "./Product";
 
 
 interface ProductService{
@@ -32,6 +34,7 @@ export default{
 
    async findOneProduct(id:string){
     try {
+
         return await Product.findById(id)
     } catch (error) {
         console.error(error)
@@ -41,6 +44,8 @@ export default{
 
    async deleteOneProduct(id){
     try {
+        const product = await Product.findById(id)
+         await deleteImages(product?.photos as ImageInfoInterface[])
          await Product.deleteOne({_id :id})
     } catch (error) {
         console.error(error)

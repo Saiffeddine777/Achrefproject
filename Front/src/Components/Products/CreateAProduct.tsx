@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import React from "react";
+import EnvUrl from "../../EnvUrl";
 
 type Props = {};
 
@@ -65,9 +66,22 @@ const CreateAProduct = ({}: Props) => {
 
   const submitProduct: () => Promise<void> = async () => {
     try {
+      const formData  : FormData= new FormData()
+       
+       if (productToInsert.photos){
+          for (const photo of productToInsert.photos){
+             formData.append("files" , photo)
+          }
+       }
+
+       formData.append("name", productToInsert.name)
+       formData.append("description", productToInsert.description)
+       formData.append("price", productToInsert.price.toString())
+       formData.append("numberOfPieces", productToInsert.numberOfPieces.toString())
+
       const response: AxiosResponse = await axios.post(
-        "http://localhost:4000/api/products/create",
-        productToInsert
+        `${EnvUrl}/api/products/create`,
+        formData
       );
       if (response?.data) {
         setInsertingState(InsertingStateEnum.Inserted);
@@ -121,7 +135,7 @@ const CreateAProduct = ({}: Props) => {
       return { ...prev, numberOfPieces: Number(e.target.value) };
     });
   };
-
+   
   return (
     <div style={styling[0].bigDiv}>
       <label style={styling[0].label}>Name Your Product: </label>
@@ -147,6 +161,7 @@ const CreateAProduct = ({}: Props) => {
       <label style={styling[0].label}>Any Photos: </label>
       <input
         type={"file"}
+        multiple  
         onChange={handlephotosChange}
         style={styling[0].input}
       />
