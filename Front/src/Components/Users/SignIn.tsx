@@ -79,7 +79,7 @@ const SignIn = ({}: Props) => {
     const handlePasswordChange : (e: React.ChangeEvent<HTMLInputElement>) => void = (e)=>{
         dataToInsert.current.password = e.target.value
     }
-    console.log(state)
+    
    return (
     <div style={styling[0].containerDiv}>
         <h2>Sign In</h2>

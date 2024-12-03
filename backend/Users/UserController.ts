@@ -1,9 +1,10 @@
 import {Request , Response} from "express"
-import  { UserInterface } from "./User"
+import  User, { UserInterface } from "./User"
 import UserService from "./UserService"
 import { UserDTO } from "../DTOs/UserDTOs"
+import { CustomExpressRequest } from "../Middlewares/JWTVerification"
 
-type ExpressAPIControllerFunction = (req: Request , res : Response)  => Promise<void>
+type ExpressAPIControllerFunction = (req: Request |CustomExpressRequest , res : Response)  => Promise<void>
 
 
 interface  UserController {
@@ -13,6 +14,7 @@ interface  UserController {
    deleteUser? : ExpressAPIControllerFunction,
    updateUser? : ExpressAPIControllerFunction,
    signInUser? : ExpressAPIControllerFunction
+   authenticate? : ExpressAPIControllerFunction
 }
 
 
@@ -140,5 +142,20 @@ export default {
             error
         })
       }
+   },
+
+  async authenticate(req:CustomExpressRequest, res){
+   try {
+      const decoded = req.decodedToken 
+      const user = await  User.findById(decoded?._id).select("-password -__v") 
+      res.status(200).json(user)
    }
+   catch(error){
+      console.error(error);
+      res.status(500).json({
+         message:"Internal Server Error",
+         error
+     })
+   }
+  }
 } satisfies  UserController

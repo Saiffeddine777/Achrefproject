@@ -2,6 +2,8 @@ import axios, { AxiosResponse } from "axios";
 import React from "react";
 import EnvUrl from "../../EnvUrl";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../ReduxTools/Hooks";
+import { authenticatAPIThunk } from "../../StateSlices/SignInSlice";
 
 type Props = {};
 
@@ -44,7 +46,8 @@ interface SignUpCSSpropertiesInterface {
   buttonElement: React.CSSProperties;
 }
 const SignUp = ({}: Props) => {
-
+  const dispatch = useAppDispatch()
+  const state = useAppSelector(state=>state.signedInUser)
   const navigate = useNavigate()
 
   const [inserted, setInserted] = React.useState<boolean>(false);
@@ -179,6 +182,11 @@ const SignUp = ({}: Props) => {
       setError(false);
     }, 2000);
   };
+
+  React.useEffect(()=>{
+      dispatch(authenticatAPIThunk() as any)
+  },[])
+  console.log(state)
   return (
     <div style={styling[0].divContainer}>
       <h2>Sign Up Now</h2>
