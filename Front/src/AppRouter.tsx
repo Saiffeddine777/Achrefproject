@@ -1,5 +1,6 @@
 
 import { createBrowserRouter } from 'react-router-dom';
+import Users from './Components/Users/Users';
 
 // import Products from './Components/Products/Products';
 // import Messages from './Components/Messages/Messages';
@@ -7,8 +8,8 @@ import { createBrowserRouter } from 'react-router-dom';
 // import HomePage from "./Components/HomePage/HomePage"
 // import Contact from './Components/Contact/Contact';
 // import CreateAProduct from './Components/Products/CreateAProduct';
-import SignUp from './Components/Users/SignUp';
-import SignIn from './Components/Users/SignIn';
+// import SignUp from './Components/Users/SignUp';
+// import SignIn from './Components/Users/SignIn';
 
 // export default  createBrowserRouter([
 // {
@@ -35,19 +36,22 @@ import SignIn from './Components/Users/SignIn';
 //     path:"/",
 //     element:<Products/>,
 //    },
+// {
+//    path:"/signup",
+//    element:<SignUp/>,
+// },
+// {
+//    path:"/signin",
+//    element:<SignIn/>
+// }
 //  ])
 
     
 export default  createBrowserRouter([
    {
-      path:"/",
-      element:<SignUp/>,
-   },
-   {
-      path:"/signin",
-      element:<SignIn/>
+      path: "/",
+      element: <Users/>
    }
-
 ])
 
     
